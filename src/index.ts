@@ -8,4 +8,5 @@ export {
   IJsonApiCreateData,
   IJsonApiData,
 } from "./types.d";
-export { JsonApiService, JsonApiDeserializer };
+export default JsonApiService;
+export { JsonApiDeserializer };
