@@ -73,7 +73,8 @@ export default class JsonApiService {
   }
 
   /** Request and deserialize a json:api response. */
-  public async request<T>(config: AxiosRequestConfig, apiConfig: IApiConfig) {
+  public async request<T>(config: AxiosRequestConfig, apiConfig?: IApiConfig) {
+    apiConfig = apiConfig || {};
     apiConfig = { ...this.globalApiConfig, ...apiConfig };
     let response: AxiosResponse<IJsonApiDetail | IJsonApiList | null>;
     config = {
@@ -86,7 +87,7 @@ export default class JsonApiService {
       );
     } catch (err: any) {
       if (err.response) {
-        if (apiConfig.onError) {
+        if (apiConfig?.onError) {
           apiConfig.onError({ response: err.response });
         }
       }
@@ -117,7 +118,7 @@ export default class JsonApiService {
     url: string,
     data: { data: IJsonApiCreateData },
     params: any = {},
-    apiConfig: IApiConfig
+    apiConfig?: IApiConfig
   ) {
     const response = await this.request(
       {
@@ -136,7 +137,7 @@ export default class JsonApiService {
     url: string,
     data: { data: IJsonApiCreateData },
     params: any = {},
-    apiConfig: IApiConfig
+    apiConfig?: IApiConfig
   ) {
     const response = await this.request(
       {
@@ -151,7 +152,7 @@ export default class JsonApiService {
   }
 
   /** List a resource. */
-  public async list<T>(url: string, params: any = {}, apiConfig: IApiConfig) {
+  public async list<T>(url: string, params: any = {}, apiConfig?: IApiConfig) {
     const response = await this.request(
       {
         url,
@@ -164,7 +165,7 @@ export default class JsonApiService {
   }
 
   /** Get a resource. */
-  public async get<T>(url: string, params: any = {}, apiConfig: IApiConfig) {
+  public async get<T>(url: string, params: any = {}, apiConfig?: IApiConfig) {
     const response = await this.request(
       {
         url,
@@ -181,7 +182,7 @@ export default class JsonApiService {
     url: string,
     data: { data: IJsonApiData },
     params: any = {},
-    apiConfig: IApiConfig
+    apiConfig?: IApiConfig
   ) {
     const response = await this.request(
       {
@@ -196,7 +197,7 @@ export default class JsonApiService {
   }
 
   /** Remove a resource. */
-  public async remove(url: string, params: any = {}, apiConfig: IApiConfig) {
+  public async remove(url: string, params: any = {}, apiConfig?: IApiConfig) {
     const response = await this.request(
       {
         url,
