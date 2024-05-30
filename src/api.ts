@@ -98,17 +98,20 @@ export default class JsonApiService {
     const included = response.data?.included || [];
     const data = response.data?.data;
     const include = config.params?.include || "";
+    const relationships = config.params?.relationships;
     if (!data || !response.data) return response as AxiosResponse<null>;
     else if (Array.isArray(data)) {
-      response.data.data = data.map((data) =>
-        new JsonApiDeserializer(data, included, include).deserialize()
-      );
+      response.data.data = data.map((data) => {
+        return {
+          ...new JsonApiDeserializer(data, included, include).deserialize(),
+          ...relationships,
+        };
+      });
     } else {
-      response.data.data = new JsonApiDeserializer(
-        data,
-        included,
-        include
-      ).deserialize();
+      response.data.data = {
+        ...new JsonApiDeserializer(data, included, include).deserialize(),
+        ...relationships,
+      };
     }
     return response as AxiosResponse<IDeserializedResponseData<T>>;
   }

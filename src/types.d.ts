@@ -32,6 +32,12 @@ export type IDeserializedResponseData<T> = {
   included: IJsonApiData[];
   meta: { pagination: { page: number; pages: number; count: number } };
   links: { first: string; last: string; next: string; prev: string };
+  relationships: {
+    [resource: string]: {
+      data: IDeserializedJsonApiData | IDeserializedJsonApiData[];
+      meta?: { count: number };
+    };
+  };
 };
 
 /** Detail response. */
