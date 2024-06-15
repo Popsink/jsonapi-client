@@ -45,7 +45,8 @@ export default class JsonApiService {
       config.headers["Content-Type"] = "application/vnd.api+json";
       if (process.env.NODE_ENV === "test") {
         config.headers["Access-Control-Allow-Credentials"] = true;
-      } else if (this.authToken) {
+      }
+      if (this.authToken) {
         config.headers["Authorization"] = `Bearer ${this.authToken}`;
       }
       return config;
