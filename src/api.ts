@@ -105,14 +105,14 @@ export default class JsonApiService {
         const relationships = data?.relationships;
         return {
           ...new JsonApiDeserializer(data, included, include).deserialize(),
-          ...relationships,
+          relationships,
         };
       });
     } else {
       const relationships = data?.relationships;
       response.data.data = {
         ...new JsonApiDeserializer(data, included, include).deserialize(),
-        ...relationships,
+        relationships,
       };
     }
     return response as AxiosResponse<IDeserializedResponseData<T>>;
